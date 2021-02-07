@@ -54,17 +54,16 @@
                 endif;
                 ?>
                 <hr>
-                <form action="" name="connection" method="post">
+                <form action="" name="insertion" method="post">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Votre login :</label>
-                        <input name="theUserLogin" type="text" class="form-control" id="exampleInputEmail1"
-                               aria-describedby="emailHelp" placeholder="Entrez votre login" required>
+                        <label for="theNewsTitle">Titre de l'article :</label>
+                        <input name="theNewsTitle" type="text" class="form-control" id="theNewsTitle"
+                               aria-describedby="theNewsTitle" placeholder="Titre de l'article " required>
 
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Mot de passe</label>
-                        <input name="theUserPwd" type="password" class="form-control" id="exampleInputPassword1"
-                               placeholder="Entrez votre mot de passe" required>
+                        <label for="theNewsText">Votre article</label>
+                        <textarea class="form-control" id="theNewsText" name="theNewsText" rows="3" required></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Envoyer</button>
                 </form>

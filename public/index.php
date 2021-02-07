@@ -13,6 +13,7 @@ require_once "../config.php";
 require_once "../model/MyPDO.php";
 require_once "../model/theuser/Theuser.php";
 require_once "../model/theuser/TheuserManager.php";
+require_once "../model/thenews/ThenewsManager.php";
 
 // DB's connection
 try{
@@ -23,6 +24,9 @@ try{
 
 // create TheuserManager
 $userManager = new TheuserManager($myConnect);
+
+// create ThenewsManager
+$Thenewsmanager = new ThenewsManager($myConnect);
 
 // session routing
 if(isset($_SESSION['idsession'])&&$_SESSION['idsession']==session_id()){
