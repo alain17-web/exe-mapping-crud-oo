@@ -4,110 +4,56 @@
 class ThenewsManager
 {
     // EXERCICE créez le manager complet avec la connexion MyPDO en argument et toutes les méthodes nécessaires au CRUD des "thenews"
-
     private MyPDO $db;
 
-    public function __construct(MyPDO $connect){
-        $this->db = $connect;
+    /**
+     * ThenewsManager constructor.
+     * @param MyPDO $db
+     */
+    public function __construct(MyPDO $db)
+    {
+        $this->db = $db;
     }
 
-    //Read
-
-    public function readAllNews(): Array{
-        $sql = "SELECT * FROM thenews ORDER BY theNewsDate DESC";
-        $recupAll = $this->db->query($sql);
-        if($recupAll->rowCount()){
-            return $recupAll->fetchAll(PDO::FETCH_ASSOC);
+    // Récupération de tous les news (thenews) avec le nom d'auteur joint (theuser) ordonné par date Descendante, nous allons prendre que 180 caractères
+    public function readAllNews(): array{
+        $sql="SELECT n.idtheNews, n.theNewsTitle, SUBSTR(n.theNewsText,1,180) AS theNewsText, n.theNewsDate, n.theUser_idtheUser, u.theUserLogin 
+        FROM thenews n
+        INNER JOIN theuser u 
+            ON u.idtheUser = n.theUser_idtheUser
+        ORDER BY n.theNewsDate DESC ;
+        ";
+        $request = $this->db->query($sql);
+        // si on a des articles
+        if($request->rowCount()){
+            return $request->fetchAll(PDO::FETCH_ASSOC);
         }
-        else{
-            return[];
-        }
+        // pas d'articles
+        return [];
     }
 
-    public function readOneNewsById(int $id):Array{
-        $sql = "SELECT * FROM thenews WHERE idtheNews = ?";
-        $prepare = $this->db->prepare($sql);
-        $prepare->bindValue(1,$id,PDO::PARAM_INT);
-        $prepare->execute();
-        if($prepare->rowCount()){
-            return $prepare->fetch(PDO::FETCH_ASSOC);
-        }
-        return[];
-    }
-
-    //Insert
-
-    public function insertNews (Thenews $item){
-        $sql = "INSERT INTO thenews (theNewsTitle,theNewsText,theNewsDate,theUser_idtheUser) VALUES (?,?,?,?)";
+    // Chargement d'une news par son ID
+    public function readOneNewsById(int $idnews):array{
+        $sql="SELECT n.idtheNews, n.theNewsTitle, n.theNewsText, n.theNewsDate, n.theUser_idtheUser, u.theUserLogin 
+        FROM thenews n
+        INNER JOIN theuser u 
+            ON u.idtheUser = n.theUser_idtheUser
+        WHERE n.idtheNews=? ;
+        ";
         $request = $this->db->prepare($sql);
-        if(getTheUser_idtheUser()!==7){
-            throw new Exception('Seul Alain peut insérer un article');
+        $request->execute([$idnews]);
+        // si on a un article
+        if($request->rowCount()){
+            return $request->fetch(PDO::FETCH_ASSOC);
         }
-        try{
-            $request->execute([
-                $item->getTheNewsTitle(),
-                $item->getTheNewsText(),
-                $item->getTheNewsDate(),
-                $item->getTheUser_idtheUser()
-            ]);
-            return true;
-        }
-        catch (Exception $e){
-            return $e->getMessage();
-        }
+        // pas d'article
+        return [];
     }
 
-    //Delete 
-
-    public function deleteNewsById(int $id){
-        $sql = "DELETE FROM thenews WHERE idtheNews = ?";
-        $prepare = $this->db->prepare($sql);
-        try{
-            $prepare->execute([$id]);
-            return true;
-        }
-        catch (PDOException $exception){
-            return $exception->getMessage();
-        }
+    // méthode qui coupe le texte en dehors des mots, on peut l'utiliser sans instancier cette classe (static)
+    public static function cutTheText(string $text, int $nbChars): string{
+        $cutText = substr($text,0,$nbChars);
+        return $cutText = substr($cutText,0,strrpos($cutText," "));
     }
 
-    public function deleteNewsByTitle($title){
-        $sql = "DELETE FROM thenews WHERE theNewsTitle = ?";
-        $prepare = $this->db->prepare($sql);
-        try{
-            $prepare->execute([$title]);
-            return true;
-        }
-        catch (PDOException $exception){
-            return $exception->getMessage();
-        }
-    }
-
-    //Update 
-
-    public function updateNewsById(Thenews $thenews){
-
-        if($idtheNews == $thenews->getIdNews()){
-            $sql = "UPDATE thenews SET theNewsTitle= :theNewsTitle, theNewsText= :theNewsText, theNewsDate= :theNewsDate WHERE idtheNews= :idtheNews";
-            $prepare= $this->db->prepare($sql);
-
-            $prepare->bindValue("idtheNews",$thenews->getIdtheNews(),PDO::PARAM_INT);
-            $prepare->bindValue("theNewsTitle",$thenews->getTheNewsTitle(),PDO::PARAM_STR);
-            $prepare->bindValue("theNewsText",$thenews->getTheNewsText(),PDO::PARAM_STR);
-            $prepare->bindValue("theNewsDate",$thenews->getTheNewsDate(),PDO::PARAM_STR);
-
-            try{
-                $prepare->execute();
-                return true;
-            }
-            catch (PDOException $e){
-                return $e->getMessage();
-            }
-            
-        }
-        else{
-            return "Go back to China !";
-        }
-    }
 }
-

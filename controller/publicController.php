@@ -30,8 +30,15 @@ if(isset($_GET['connect'])){
 
 // article detail view
 if(isset($_GET['idarticle'])&&ctype_digit($_GET['idarticle'])){
-    // exercice's action
+    // conversion en entier
+    $idArticle = (int) $_GET['idarticle'];
+    $recupNews = $newsManager->readOneNewsById($idArticle);
 
+    if(empty($recupNews)){
+        $message ="Cet article n'existe plus";
+    }else{
+        $news = new Thenews($recupNews);
+    }
     // view
     require_once "../view/public/articlePublicView.php";
     exit();
@@ -62,6 +69,19 @@ if(isset($_GET['idauteur'])&&ctype_digit($_GET['idauteur'])){
     exit();
 }
 
+// on récupère toutes les news dans un tableau indexé contenant des tableaux associatifs
+$recupNews = $newsManager->readAllNews();
+
+// si le tableau est vide
+if(empty($recupNews)){
+    // création d'un message d'erreur
+    $message = "Pas encore d'articles";
+}else{
+    // sinon, on va passer chacun des résultats dans la classe de type TheNews
+    foreach($recupNews As $item){
+        $allNews[]= new Thenews($item);
+    }
+}
 
 // home view
 require_once "../view/public/indexPublicView.php";

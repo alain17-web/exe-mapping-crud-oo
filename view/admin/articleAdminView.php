@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Détail de l'article: Titre</title>
+    <title>Tous les articles</title>
     <link rel="stylesheet" href="css/bootstrap.css" media="screen">
     <link rel="stylesheet" href="css/custom.min.css" media="screen">
     <link rel="shortcut icon" href="images/favicon.ico">
@@ -42,20 +42,23 @@
         <div class="row">
             <div class="col-lg-12 mx-auto">
 
-                    <h1>Détail de l'article: Titre</h1>
+                    <h1>Tous vos articles</h1>
                 <hr>
-                <h3>Exercice: Ici le détail de l'article</h3>
-                <p>Le texte est complet et le retour à la ligne est automatique</p>
-                <p>Des boutons ou liens modifier/supprimer avec l'id de l'article sont présents</p>
-                <h5>! il doit être impossible d'afficher un article venant d'un autre utilisateur (l'id utilisateur de la session doit correspondre à la clef étrangère de l'article)</h5>
-                <p>Pour valider l'affichage et l'effectuer, vous devrez avoir au préalable rempli les modèles <strong>Thenews</strong> (pour l'hydratation et les vérifications avec les setters et l'affichage avec les getters) et <strong>ThenewsManager</strong> (pour la sélection de l'article via son id grâce à une méthode dédiée, SI l'id de l'utilisateur connecté correspond à la clef étrangère d'article!)</p>
-                <p>La partie <i>// detail admin article</i> de l'<strong>adminController</strong> devra également être modifié</p>
+                <h3>Exercice: Ici la liste d'articles écrite par cet auteur</h3>
+                <p>Au format comme les 2 articles ci-dessous, ils sont classés par la date descendante</p>
+                <p>Quand on clique sur Lire la suite - modifier/supprimer on a le détail de l'article avec des retours à la ligne automatique!</p>
+                <p>On pourra modifier ou supprimer l'article sur le détail de l'article (choix arbitraire)</p>
+                <p>Pour créer un nouvel article, le lien se trouve dans le menu du haut</p>
+                <p>Pour afficher les articles, vous devrez avoir au préalable remplir les modèles <strong>Thenews</strong> (pour l'hydratation et les vérifications avec les setters et l'affichage grâce aux getters) et <strong>ThenewsManager</strong> (pour la sélection des articles via l'id de l'utilisateur connecté) </p>
+                <p>La partie <i>// homepage admin view</i> de l'<strong>AdminController</strong> devra également être modifié</p>
                 <hr>
                 <h4>Titre News 2</h4>
-                <p>Ici un texte <br> avec les retours automatiques <br>à la ligne!</p>
-                <h5><a href="?update=2">Modifier</a> | <a href="?delete=2">Supprimer</a></h5>
+                <p>Ici un autre texte de maximum 150 caractères avec un ... <a href="?idarticle=2">Lire la suite - modifier/supprimer</a></p>
                 <h5>Le 2020-01-02 09:11:47</h5>
-
+                <hr>
+                <h4>Titre News 1</h4>
+                <p>Ici le texte de maximum 150 caractères avec un ... <a href="?idarticle=1">Lire la suite - modifier/supprimer</a></p>
+                <h5>Le 2020-02-01 16:40:22</h5>
                 <hr>
                 <a href="#page-top">Retour en haut</a>
                 <hr>
