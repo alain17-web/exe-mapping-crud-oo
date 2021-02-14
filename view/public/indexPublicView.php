@@ -35,7 +35,7 @@
         <div class="row">
             <div class="col-lg-12 mx-auto">
 
-                    <h1>Tous nos articles</h1>
+                    <h1>Tous mes articles</h1>
                 <hr>
                 <?php
                 if(isset($message)) :
@@ -46,7 +46,8 @@
                     foreach ($allNews AS $item):
                 ?>
                 <h4><?=$item->getTheNewsTitle()?></h4>
-                        <p><?=ThenewsManager::cutTheText($item->getTheNewsText(),150)?> <a href="?idarticle=<?=$item->getIdtheNews()?>">Lire la suite</a></p>
+                <p><?=$item->getTheNewsText()?></p>
+                        
                 <h5>Par <a href="?idauteur=<?=$item->getTheUser_idtheUser()?>"><?=$item->getTheUserLogin()?></a> le <?=$item->getTheNewsDate()?></h5>
                 <hr>
                 <?php

@@ -29,10 +29,10 @@ if(isset($_GET['connect'])){
 }
 
 // article detail view
-if(isset($_GET['idarticle'])&&ctype_digit($_GET['idarticle'])){
+if(isset($_GET['idTheNews'])&&ctype_digit($_GET['idTheNews'])){
     // conversion en entier
-    $idArticle = (int) $_GET['idarticle'];
-    $recupNews = $newsManager->readOneNewsById($idArticle);
+    $idTheNews = (int) $_GET['idTheNews'];
+    $recupNews = $newsManager->readOneNewsById($idTheNews);
 
     if(empty($recupNews)){
         $message ="Cet article n'existe plus";
@@ -40,7 +40,7 @@ if(isset($_GET['idarticle'])&&ctype_digit($_GET['idarticle'])){
         $news = new Thenews($recupNews);
     }
     // view
-    require_once "../view/public/articlePublicView.php";
+    require_once "../view/public/newsPublicView.php";
     exit();
 }
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Tous les articles</title>
+    <title>Administration: suppression d'un article</title>
     <link rel="stylesheet" href="css/bootstrap.css" media="screen">
     <link rel="stylesheet" href="css/custom.min.css" media="screen">
     <link rel="shortcut icon" href="images/favicon.ico">
@@ -23,18 +23,11 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="?create">Créer un nouvel article</a>
-                </li>
-                
-               
-
-                <li class="nav-item">
                     <a class="nav-link" href="?disconnect">Déconnexion</a>
                 </li>
             </ul>
 
         </div>
-
     </div>
 </div>
 
@@ -44,41 +37,24 @@
         <div class="row">
             <div class="col-lg-12 mx-auto">
 
-                    <h1>Tous mes articles</h1>
+                <h1>Voulez-vous vraiment supprimer l'article : <?=$news->getTheNewsTitle()?>?</h1>
+                <hr>
+                <h3><a href="?delete=<?=$news->getIdtheNews()?>&ok">Oui</a> - <a href="./">Non</h3>
                 
-                <div class="page-header" id="banner">
-        <div class="row">
-            <div class="col-lg-12 mx-auto">
-
-                    
-                <hr>
                 <?php
-                if(isset($message)) :
+                if(isset($message)):
                 ?>
-                <h3><?=$message?></h3>
+                    <button type="button" class="btn btn-warning"><?=$message?></button>
                 <?php
-                else:
-                    foreach ($allNews AS $item):
-                ?>
-                <h4><?=$item->getTheNewsTitle()?></h4>
-                <p><?=$item->getTheNewsText()?></p>
-                        
-                <h5>Par <a href="?idauteur=<?=$item->getTheUser_idtheUser()?>"><?=$item->getTheUserLogin()?></a> le <?=$item->getTheNewsDate()?></h5>
-                <p><a href="?update=<?=$item->getIdTheNews()?>">Modifier</a> | <a href="?delete=<?=$item->getIdTheNews()?>">Supprimer</a></p>
-                <hr>
-                <?php
-                    endforeach;
                 endif;
                 ?>
                 <hr>
-                <a href="#page-top">Retour en haut</a>
-                <hr>
+                
+                
             </div>
 
         </div>
     </div>
-
-                
 
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>

@@ -33,7 +33,7 @@ class ThenewsManager
     }
 
     // Chargement d'une news par son ID
-    public function readOneNewsById(int $idnews):array{
+    public function readOneNewsById(int $idThenews):array{
         $sql="SELECT n.idtheNews, n.theNewsTitle, n.theNewsText, n.theNewsDate, n.theUser_idtheUser, u.theUserLogin 
         FROM thenews n
         INNER JOIN theuser u 
@@ -41,13 +41,66 @@ class ThenewsManager
         WHERE n.idtheNews=? ;
         ";
         $request = $this->db->prepare($sql);
-        $request->execute([$idnews]);
+        $request->execute([$idThenews]);
         // si on a un article
         if($request->rowCount()){
             return $request->fetch(PDO::FETCH_ASSOC);
         }
         // pas d'article
         return [];
+    }
+
+    //Création d'une news
+    public function createNews(Thenews $item){
+        $sql = "INSERT INTO thenews (theNewsTitle,theNewsText,theUser_idtheUser) VALUES (?,?,?)";
+        $request = $this->db->prepare($sql);
+        try{
+            $request->execute([
+                $item->getTheNewsTitle(),
+                $item->getTheNewsText(),
+                $item->getTheUser_idtheUser()
+            ]);
+            return true;
+        }catch (Exception $e){
+            return $e->getMessage();
+        }
+        
+    }
+
+    //Suppression d'une news
+    public function deleteNewsById(int $idTheNews){
+        $sql = "DELETE FROM thenews WHERE idTheNews = ?";
+        $prepare = $this->db->prepare($sql);
+        try{
+            $prepare->execute([$idTheNews]);
+            return true;
+        }catch(PDOException $exception){
+            return $exception->getMessage();
+        }
+    }
+
+    //Modification d'une news
+    public function updateNewsById(Thenews $news,int $idTheNews){
+        if($idTheNews==$news->getIdtheNews()){
+            $sql = "UPDATE thenews SET theNewsTitle= :theNewsTitle,theNewsText= :theNewsText,theNewsDate= :theNewsDate WHERE idTheNews= :idTheNews";
+            $prepare = $this->db->prepare($sql);
+
+            $prepare->bindValue("idTheNews",$news->getIdTheNews(),PDO::PARAM_INT);
+            $prepare->bindValue("theNewsTitle",$news->getTheNewsTitle(),PDO::PARAM_STR);
+            $prepare->bindValue("theNewsText",$news->getTheNewsText(),PDO::PARAM_STR);
+            $prepare->bindValue("theNewsDate",$news->getTheNewsDate(),PDO::PARAM_STR);
+            /*$prepare->bindValue("theUser_idtheUser",$news->getTheUser_idtheUser(),PDO::PARAM_INT);*/
+
+            try{
+                $prepare->execute();
+                return true;
+            }catch(PDOException $e){
+                return $e->getMessage();
+            }
+        }
+        else{
+            return "No Way !";
+        }
     }
 
     // méthode qui coupe le texte en dehors des mots, on peut l'utiliser sans instancier cette classe (static)

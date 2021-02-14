@@ -37,15 +37,7 @@
         <div class="row">
             <div class="col-lg-12 mx-auto">
 
-                <h1>Administration: création d'un article</h1>
-                <hr>
-                <h3>Exercice, c'est ici que vous allez créer le formulaire d'insertion d'articles</h3>
-                <p>Il faut remplacer le formulaire par celui permettant d'ajouter un article</p>
-                <p>Tous les champs de la table 'thenews' doivent être présent dans les "name" de ceux-ci, mise à part "idtheNews" et "theNewsDate" (générés automatiquement en SQL) </p>
-                <p>Il faut un champs caché "theUser_idtheUser" contenant l'id de l'utilisateur connecté (on la récupère par la session)</p>
-                <p>Un utilisateur ne peut poster qu'à son nom!</p>
-                <p>Pour valider l'insertion et l'effectuer, vous devrez avoir au préalable rempli les modèles <strong>Thenews</strong> (pour l'hydratation et les vérifications avec les setters) et <strong>ThenewsManager</strong> (pour l'insertion grâce à une méthode dédiée)</p>
-                <p>La partie <i>// create article</i> de l'<strong>adminController</strong> devra également être modifié</p>
+                
                 <?php
                 if(isset($message)):
                 ?>
@@ -54,18 +46,21 @@
                 endif;
                 ?>
                 <hr>
-                <form action="" name="connection" method="post">
+                <form action="" name="insertion" method="post">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Votre login :</label>
-                        <input name="theUserLogin" type="text" class="form-control" id="exampleInputEmail1"
-                               aria-describedby="emailHelp" placeholder="Entrez votre login" required>
+                        <label for="theNewsTitle">Votre titre :</label>
+                        <input name="theNewsTitle" type="text" class="form-control" id="theNewsTitle"
+                               aria-describedby="theNewsTitle" placeholder="Entrez votre titre" required>
 
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Mot de passe</label>
-                        <input name="theUserPwd" type="password" class="form-control" id="exampleInputPassword1"
-                               placeholder="Entrez votre mot de passe" required>
+                        <label for="theNewsText">Votre texte :</label>
+                        <textarea name="theNewsText" type="text" class="form-control" id="theNewsText"
+                               placeholder="Entrez votre texte" required></textarea>
                     </div>
+                    <input type="hidden" name="theUser_idtheUser" value="7">
+
+
                     <button type="submit" class="btn btn-primary">Envoyer</button>
                 </form>
                 <hr>
