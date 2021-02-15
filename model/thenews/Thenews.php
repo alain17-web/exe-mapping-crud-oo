@@ -136,7 +136,7 @@ class Thenews
     /**
      * @param int $theUser_idtheUser
      */
-    public function setTheUser_idtheUser(int $theUser_idtheUser): void
+    public function setTheUser_idtheUser( $theUser_idtheUser): void
     {
         $theUser_idtheUser = (int) $theUser_idtheUser;
         if(!empty($theUser_idtheUser)) {

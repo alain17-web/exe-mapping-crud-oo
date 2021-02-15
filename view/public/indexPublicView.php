@@ -46,7 +46,10 @@
                     foreach ($allNews AS $item):
                 ?>
                 <h4><?=$item->getTheNewsTitle()?></h4>
-                <p><?=$item->getTheNewsText()?></p>
+
+                <p><?=ThenewsManager::cutTheText($item->getTheNewsText(),150)?>...<a href="?idTheNews=<?=$item->getIdTheNews()?>">Lire la suite</a></p>
+                
+                
                         
                 <h5>Par <a href="?idauteur=<?=$item->getTheUser_idtheUser()?>"><?=$item->getTheUserLogin()?></a> le <?=$item->getTheNewsDate()?></h5>
                 <hr>

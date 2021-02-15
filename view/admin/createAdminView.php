@@ -58,7 +58,7 @@
                         <textarea name="theNewsText" type="text" class="form-control" id="theNewsText"
                                placeholder="Entrez votre texte" required></textarea>
                     </div>
-                    <input type="hidden" name="theUser_idtheUser" value="7">
+                    <input type="hidden" name="theUser_idtheUser" value=7>
 
 
                     <button type="submit" class="btn btn-primary">Envoyer</button>

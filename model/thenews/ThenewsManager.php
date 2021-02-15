@@ -32,6 +32,18 @@ class ThenewsManager
         return [];
     }
 
+    public function readAllNewsByIdUser(int $iduser){
+        $sql = "SELECT n.idTheNews, n.theNewsTitle, SUBSTR(theNewsText,1,180) AS theNewsText, n.theNewsDate, n.theUser_idtheUser FROM thenews n WHERE n.theUser_idtheUser = ? ORDER BY n.theNewsDate DESC;";
+        $request = $this->db->prepare($sql);
+        $request->execute([$iduser]);
+
+        if($request->rowCount()){
+            return $request->fetchAll(PDO::FETCH_ASSOC);
+        }
+        
+        return[];
+    }
+
     // Chargement d'une news par son ID
     public function readOneNewsById(int $idThenews):array{
         $sql="SELECT n.idtheNews, n.theNewsTitle, n.theNewsText, n.theNewsDate, n.theUser_idtheUser, u.theUserLogin 
@@ -85,10 +97,11 @@ class ThenewsManager
             $sql = "UPDATE thenews SET theNewsTitle= :theNewsTitle,theNewsText= :theNewsText,theNewsDate= :theNewsDate WHERE idTheNews= :idTheNews";
             $prepare = $this->db->prepare($sql);
 
-            $prepare->bindValue("idTheNews",$news->getIdTheNews(),PDO::PARAM_INT);
+            
             $prepare->bindValue("theNewsTitle",$news->getTheNewsTitle(),PDO::PARAM_STR);
             $prepare->bindValue("theNewsText",$news->getTheNewsText(),PDO::PARAM_STR);
             $prepare->bindValue("theNewsDate",$news->getTheNewsDate(),PDO::PARAM_STR);
+            $prepare->bindValue("idTheNews",$news->getIdTheNews(),PDO::PARAM_INT);
             /*$prepare->bindValue("theUser_idtheUser",$news->getTheUser_idtheUser(),PDO::PARAM_INT);*/
 
             try{

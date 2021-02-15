@@ -61,27 +61,39 @@ if(isset($_GET['idauteur'])&&ctype_digit($_GET['idauteur'])){
         $message = $recup;
     }
 
-
-    // exercice's action
+    //voir tous les articles de l'auteur
+    $news = $newsManager->readAllNewsByIdUser($iduser);
+    if(empty($news)){
+        $message2 = "Cet auteur n'a pas écrit d'article";
+    }
+    else{
+        foreach($news AS $item){
+            $allNews[] = new Thenews($item);
+        }
+    }
+    
 
     // view
     require_once "../view/public/auteurPublicView.php";
     exit();
 }
 
+// Voir tous les articles
+
 // on récupère toutes les news dans un tableau indexé contenant des tableaux associatifs
-$recupNews = $newsManager->readAllNews();
+    $recupNews = $newsManager->readAllNews();
 
 // si le tableau est vide
-if(empty($recupNews)){
+    if(empty($recupNews)){
     // création d'un message d'erreur
     $message = "Pas encore d'articles";
-}else{
+    }else{
     // sinon, on va passer chacun des résultats dans la classe de type TheNews
-    foreach($recupNews As $item){
+        foreach($recupNews As $item){
         $allNews[]= new Thenews($item);
+        }
     }
-}
+
 
 // home view
 require_once "../view/public/indexPublicView.php";
